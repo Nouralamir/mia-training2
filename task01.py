@@ -1,44 +1,27 @@
 import random
 from collections import Counter
 
-# --- Game Data ---
-# A hardcoded list of 5-letter words. You can add more words here.
 WORDS = [
-    "APPLE", "BRAVE", "CRANE", "DRIVE", "EQUAL", "FROST",
-    "GHOST", "HOUSE", "IDEAS", "JUICE", "KNIFE", "LUCKY",
-    "MAGIC", "NIGHT", "OCEAN", "POWER", "QUITE", "ROBOT",
-    "SPACE", "TIGER", "UNITY", "VOICE", "WATER", "ZEBRA"
+    "apple", "point", "story", "DRIVE", "EQUAL", "would",
+    "ghost", "after", "water", "frist", "which", "there",
+    "asked", "while", "found", "small", "years", "after",
+    "house", "below", "UNITY", "every", "think", "where"
 ]
 
 def check_guess(secret_word, guess):
-    """
-    Compares a guess to a secret word and returns feedback for each letter.
-
-    The feedback is a list of tuples, where each tuple contains the letter
-    from the guess and its status:
-    - 'correct': The letter is in the secret word and in the correct position.
-    - 'present': The letter is in the secret word but in a different position.
-    - 'absent': The letter is not in the secret word at all.
-    
-    Args:
-        secret_word (str): The word the player is trying to guess.
-        guess (str): The word the player has guessed.
-    
-    Returns:
-        list: A list of tuples containing (letter, status) for each letter in the guess.
-    """
+  
     
     # Create a frequency map of letters in the secret word
     secret_letter_counts = Counter(secret_word)
     result = [(letter, 'absent') for letter in guess]
 
-    # First pass: Find 'correct' letters
+ 
     for i in range(len(guess)):
         if guess[i] == secret_word[i]:
             result[i] = (guess[i], 'correct')
             secret_letter_counts[guess[i]] -= 1
 
-    # Second pass: Find 'present' letters
+   
     for i in range(len(guess)):
         if result[i][1] != 'correct':
             if secret_letter_counts.get(guess[i], 0) > 0:
@@ -48,13 +31,7 @@ def check_guess(secret_word, guess):
     return result
 
 def print_feedback(feedback):
-    """
-    Prints the guess feedback in a user-friendly format for the command line.
-    
-    - '🟩' (Green Square) indicates a 'correct' letter.
-    - '🟨' (Yellow Square) indicates a 'present' letter.
-    - '⬜' (White Square) indicates an 'absent' letter.
-    """
+   
     feedback_emojis = {
         'correct': '🟩',
         'present': '🟨',
@@ -67,9 +44,7 @@ def print_feedback(feedback):
     print(display_string)
 
 def main():
-    """
-    The main function to run the Wordle game.
-    """
+   
     print("Welcome to Command-Line Wordle!")
     print("You have 6 attempts to guess a 5-letter word.")
     print("Feedback will be given for each letter in your guess:")
@@ -90,7 +65,6 @@ def main():
     while num_guesses < max_guesses:
         guess = input(f"Guess #{num_guesses + 1} (5 letters): ").upper()
 
-        # Basic input validation
         if len(guess) != 5:
             print("Please enter a 5-letter word.")
             continue
@@ -103,7 +77,6 @@ def main():
         feedback = check_guess(secret_word, guess)
         guess_history.append((guess, feedback))
 
-        # Print all previous guesses and feedback to simulate a grid.
         print("\n--- Game State ---")
         for prev_guess, prev_feedback in guess_history:
             print(f"Guess: {prev_guess}")
