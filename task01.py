@@ -10,8 +10,7 @@ WORDS = [
 
 def check_guess(secret_word, guess):
   
-    
-    # Create a frequency map of letters in the secret word
+   
     secret_letter_counts = Counter(secret_word)
     result = [(letter, 'absent') for letter in guess]
 
